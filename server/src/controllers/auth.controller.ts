@@ -61,7 +61,7 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ id: getUser.id }, process.env.JWT_SECRET!, {
+    const token = jwt.sign({ id: getUser.id, role: getUser.role }, process.env.JWT_SECRET!, {
         expiresIn: 3600,
     });
 
@@ -71,7 +71,12 @@ export const login = async (req: Request, res: Response) => {
         expires: new Date(Date.now() + 3600000),
     })
 
-    return res.status(200).json({ message: "User logged in successfully" });
+    return res.status(200).json({ message: "User logged in successfully", user: {
+      id: getUser.id,
+      username: getUser.username,
+      email: getUser.email,
+      role: getUser.role
+    } });
   } catch (err) {
     return res.status(500).json({ message: "Failed to login" });
   }

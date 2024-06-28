@@ -2,9 +2,13 @@ import { Card, CardContent, CardDescription, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
 import React from "react";
 import { API_URL } from "../lib/url";
+import { useAuth } from "../layouts/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 export const LoginForm = (props: { prompt: () => void }) => {
   
+    const navigate = useNavigate()
+    const {setUser} = useAuth()
     const login = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
@@ -22,7 +26,10 @@ export const LoginForm = (props: { prompt: () => void }) => {
 
         if(response.ok) {
             const data = await response.json();
+            setUser(data.user)
+            localStorage.setItem("user", JSON.stringify(data.user));
             console.log(data);
+            navigate('/')
         } else {
             const data = await response.json();
             console.log(data);

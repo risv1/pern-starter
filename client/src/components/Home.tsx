@@ -1,7 +1,19 @@
+import { useEffect } from "react"
+import { useAuth } from "../layouts/AuthProvider"
 import Navbar from "./Navbar"
 import { Button } from "./ui/button"
+import { useNavigate } from "react-router-dom"
+import { checkAuth } from "../lib/checkAuth"
 
 export default function Home() {
+
+    const navigate = useNavigate()
+    const {setUser} = useAuth()
+
+    useEffect(()=>{
+        checkAuth(setUser, navigate)
+    }, [])
+
     return (
         <>
         <Navbar />
