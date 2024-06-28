@@ -3,7 +3,7 @@ version: '3.5'
 services:
 
   postgres:
-    container_name: postgres_vital_link
+    container_name: postgres_pern_starter
     image: postgres
     environment:
       POSTGRES_DB: "postgres"
