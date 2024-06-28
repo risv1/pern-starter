@@ -4,6 +4,7 @@ import authRoutes from "./routes/auth.routes";
 import cookieParser from "cookie-parser";
 import { config } from "dotenv";
 import path from "path";
+import { corsConfig } from "./middlewares/cors";
 
 config({
   path: path.resolve(__dirname, "../../.env")
@@ -16,8 +17,10 @@ if(!port) {
 }
 
 app.use(bodyParser.json());
+app.use(corsConfig)
 app.use(authRoutes);
 app.use(cookieParser());
+
 
 app.listen(port, () => {
   console.log("Server is running on port 8000");
