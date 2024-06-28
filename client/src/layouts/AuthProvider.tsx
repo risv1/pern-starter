@@ -1,7 +1,5 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { createContext, useState } from "react";
-import { checkAuth } from "../lib/checkAuth";
-import { useNavigate } from "react-router-dom";
 
 type AuthContextType = {
     user: unknown;
@@ -12,11 +10,6 @@ const AuthContext = createContext<AuthContextType | null>(null)
 
 export const AuthProvider = ({children}: {children: JSX.Element}) => {
     const [user, setUser] = useState(null);
-    const navigate = useNavigate()
-
-    useEffect(()=>{
-        checkAuth(setUser, navigate)
-    }, [])
 
     return (
         <AuthContext.Provider value={{user, setUser}}>
